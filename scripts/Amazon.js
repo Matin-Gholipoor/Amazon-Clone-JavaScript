@@ -39,7 +39,7 @@ function generateProduct(product) {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart" data-product-id="${product.id}" data-timeout-id="">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -86,4 +86,15 @@ function addToCart(button) {
     cartQuantity += item.quantity;
   });
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
+  document.querySelectorAll('.js-added-to-cart').forEach((addedElement) => {
+    if (addedElement.dataset.productId === button.dataset.productId) {
+      addedElement.classList.add('added-to-cart-activated');
+
+      clearTimeout(addedElement.dataset.timeoutID);
+      addedElement.dataset.timeoutID = setTimeout(() => {
+        addedElement.classList.remove('added-to-cart-activated');
+      }, 2000);
+    }
+  });
 }
