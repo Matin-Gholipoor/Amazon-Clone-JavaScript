@@ -65,11 +65,11 @@ function generateProduct(product) {
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
   button.addEventListener('click', () => {
     addToCart(button);
-    updateCartQuantity();
+    updateCartQuantity(button);
   })
 });
 
-function updateCartQuantity() {
+function updateCartQuantity(button) {
   let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity += item.quantity;
