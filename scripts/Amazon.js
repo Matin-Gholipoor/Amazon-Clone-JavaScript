@@ -23,7 +23,7 @@ function generateProduct(product) {
       </div>
 
       <div class="product-quantity-container">
-        <select>
+        <select class="js-quantity-selector" data-product-id="${product.id}">
           <option selected value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -62,6 +62,12 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
 function addToCart(button) {
   let productExists = false;
   let indexInCart;
+  let quantity = 1;
+
+  document.querySelectorAll('.js-quantity-selector').forEach((quantitySelector) => {
+    if (quantitySelector.dataset.productId === button.dataset.productId)
+      quantity = Number(quantitySelector.value);
+  })
 
   cart.forEach((item, index) => {
     if (item.productId === button.dataset.productId) {
@@ -70,9 +76,9 @@ function addToCart(button) {
     }
   });
 
-  productExists ? cart[indexInCart].quantity++ : cart.push({
+  productExists ? cart[indexInCart].quantity += quantity : cart.push({
     productId: button.dataset.productId,
-    quantity: 1
+    quantity
   });
 
   let cartQuantity = 0;
