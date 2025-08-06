@@ -1,32 +1,3 @@
-const products = [{
-    name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
-    image: 'athletic-cotton-socks-6-pairs.jpg',
-    rating: {
-      stars: 4.5,
-      count: 87,
-    },
-    priceCents: 1090
-  },
-  {
-    name: 'Intermediate Size Basketball',
-    image: 'intermediate-composite-basketball.jpg',
-    rating: {
-      stars: 4.0,
-      count: 127,
-    },
-    priceCents: 2095
-  },
-  {
-    name: 'Adults Plain Cotton T-Shirt - 2 Pack',
-    image: 'adults-plain-cotton-tshirt-2-pack-teal.jpg',
-    rating: {
-      stars: 4.5,
-      count: 56,
-    },
-    priceCents: 799
-  }
-];
-
 products.forEach(generateProduct);
 
 function generateProduct(product) {
@@ -73,11 +44,36 @@ function generateProduct(product) {
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary">
+      <button class="add-to-cart-button button-primary js-add-to-cart-button" data-product-id="${product.id}">
         Add to Cart
       </button>
     </div>
   `;
 
   document.querySelector('.js-products-grid').innerHTML += productElement;
+}
+
+document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    addToCart(button);
+  })
+});
+
+function addToCart(button) {
+  let productExists = false;
+  let indexInCart;
+
+  cart.forEach((item, index) => {
+    if (item.productId === button.dataset.productId) {
+      productExists = true;
+      indexInCart = index;
+    }
+  });
+
+  productExists ? cart[indexInCart].count++ : cart.push({
+    productId: button.dataset.productId,
+    count: 1
+  });
+
+  console.log(cart);
 }
