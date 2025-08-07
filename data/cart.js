@@ -1,5 +1,4 @@
 export const cart = JSON.parse(localStorage.getItem('cart')) || [];
-console.log(cart);
 
 export function addToCart(productId) {
   let productExists = false;
@@ -20,7 +19,8 @@ export function addToCart(productId) {
 
   productExists ? cart[indexInCart].quantity += quantity : cart.push({
     productId: productId,
-    quantity
+    quantity,
+    deliveryOptionId: '0'
   });
 
   saveCart();
@@ -43,6 +43,15 @@ export function updateQuantiy(productId, newQuantity) {
       else
         itemInCart.quantity = newQuantity;
     }
+  });
+
+  saveCart();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  cart.forEach((item) => {
+    if (item.productId === productId)
+      item.deliveryOptionId = deliveryOptionId;
   });
 
   saveCart();

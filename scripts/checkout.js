@@ -1,12 +1,19 @@
 import {
   cart,
   removeFromCart,
-  updateQuantiy
+  updateQuantiy,
+  updateDeliveryOption
 } from '../data/cart.js';
 
 import {
   products
 } from '../data/products.js';
+
+import {
+  deliveryOptions
+} from '../data/deliveryOptions.js';
+
+import dayjs from "https://esm.run/dayjs";
 
 let orderSummaryHTML;
 showOrderSummary();
@@ -24,8 +31,8 @@ function showOrderSummary() {
 
     orderSummaryHTML += `
       <div class="cart-item-container">
-        <div class="delivery-date">
-          Delivery date: Tuesday, June 21
+        <div class="delivery-date js-delivery-date">
+          Delivery date: ${retrieveDeliveryDate(item.deliveryOptionId)}
         </div>
   
         <div class="cart-item-details-grid">
@@ -61,39 +68,8 @@ function showOrderSummary() {
             <div class="delivery-options-title">
               Choose a delivery option:
             </div>
-            <div class="delivery-option">
-              <input type="radio" checked class="delivery-option-input" name="delivery-option-${item.productId}">
-              <div>
-                <div class="delivery-option-date">
-                  Tuesday, June 21
-                </div>
-                <div class="delivery-option-price">
-                  FREE Shipping
-                </div>
-              </div>
-            </div>
-            <div class="delivery-option">
-              <input type="radio" class="delivery-option-input" name="delivery-option-${item.productId}">
-              <div>
-                <div class="delivery-option-date">
-                  Wednesday, June 15
-                </div>
-                <div class="delivery-option-price">
-                  $4.99 - Shipping
-                </div>
-              </div>
-            </div>
-            <div class="delivery-option">
-              <input type="radio" class="delivery-option-input" name="delivery-option-${item.productId}">
-              <div>
-                <div class="delivery-option-date">
-                  Monday, June 13
-                </div>
-                <div class="delivery-option-price">
-                  $9.99 - Shipping
-                </div>
-              </div>
-            </div>
+
+            ${GenerateDeliveryOptionsHTML(item)}
           </div>
         </div>
       </div>
@@ -109,6 +85,7 @@ function showOrderSummary() {
     });
   });
 
+  // bug here
   document.querySelectorAll('.js-update-quantity-link').forEach((updateLink) => {
     updateLink.addEventListener('click', () => {
       document.querySelector('.js-update-quantity-link').classList.add('update-quantity-link-editing');
@@ -133,4 +110,46 @@ function showOrderSummary() {
     itemsQuantity += item.quantity;
   });
   document.querySelector('.js-return-to-home-link').innerHTML = `${itemsQuantity} items`;
+
+  document.querySelectorAll('.js-delivery-option').forEach((option, index) => {
+    option.addEventListener('click', () => {
+      updateDeliveryOption(option.dataset.productId, String(index % deliveryOptions.length));
+      showOrderSummary();
+    });
+  });
+}
+
+function GenerateDeliveryOptionsHTML(item) {
+  let deliveryOptionsHTML = '';
+
+  deliveryOptions.forEach((deliveryOption) => {
+    const isChecked = item.deliveryOptionId === deliveryOption.id;
+
+    deliveryOptionsHTML += `
+      <div class="delivery-option js-delivery-option" data-product-id="${item.productId}">
+        <input type="radio" ${isChecked ? 'checked' : ''} class="delivery-option-input" name="delivery-option-${item.productId}">
+        <div>
+          <div class="delivery-option-date">
+            ${dayjs().add(deliveryOption.deliveryDays, 'day').format('dddd, MMMM D')}
+          </div>
+          <div class="delivery-option-price">
+            ${deliveryOption.priceCents ? `$${(deliveryOption.priceCents / 100).toFixed(2)} -` : 'FREE'} Shipping
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  return deliveryOptionsHTML;
+}
+
+function retrieveDeliveryDate(deliveryOptionId) {
+  let deliveryDate = '';
+
+  deliveryOptions.forEach((deliveryOption) => {
+    if (deliveryOptionId === deliveryOption.id)
+      deliveryDate = dayjs().add(deliveryOption.deliveryDays, 'day').format('dddd, MMMM D');
+  });
+
+  return deliveryDate;
 }
