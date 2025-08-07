@@ -11,8 +11,8 @@ export function addToCart(productId) {
       quantity = Number(quantitySelector.value);
   })
 
-  cart.forEach((item, index) => {
-    if (item.productId === productId) {
+  cart.forEach((itemInCart, index) => {
+    if (itemInCart.productId === productId) {
       productExists = true;
       indexInCart = index;
     }
@@ -35,6 +35,19 @@ export function removeFromCart(productId) {
   saveCart();
 }
 
-function saveCart(){
+export function updateQuantiy(productId, newQuantity) {
+  cart.forEach((itemInCart) => {
+    if (itemInCart.productId === productId) {
+      if (newQuantity === 0)
+        removeFromCart(productId);
+      else
+        itemInCart.quantity = newQuantity;
+    }
+  });
+
+  saveCart();
+}
+
+function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }

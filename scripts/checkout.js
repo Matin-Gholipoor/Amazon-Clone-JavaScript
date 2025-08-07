@@ -1,6 +1,7 @@
 import {
   cart,
-  removeFromCart
+  removeFromCart,
+  updateQuantiy
 } from '../data/cart.js';
 
 import {
@@ -14,11 +15,10 @@ function showOrderSummary() {
   orderSummaryHTML = '';
 
   cart.forEach((item) => {
-    const productId = item.productId;
     let product;
 
     products.forEach((itemFromProducts) => {
-      if (itemFromProducts.id === productId)
+      if (itemFromProducts.id === item.productId)
         product = itemFromProducts;
     })
 
@@ -40,12 +40,18 @@ function showOrderSummary() {
             </div>
             <div class="product-quantity">
               <span>
-                Quantity: <span class="quantity-label">${item.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label">${item.quantity}</span>
               </span>
-              <span class="update-quantity-link link-primary">
+              <span class="update-quantity-link js-update-quantity-link link-primary" data-product-id = ${item.productId}>
                 Update
               </span>
-              <span class="delete-quantity-link js-delete-quantity-link link-primary" data-product-id = ${productId}>
+              <div class="save-quantity-row js-save-quantity-row" data-product-id = ${item.productId}>
+                <input type="number" class="update-quantity-input js-update-quantity-input" value="${item.quantity}" min="0"></input>
+                <span class="save-quantity-link js-save-quantity-link link-primary" data-product-id = ${item.productId}>
+                  Save
+                </span>
+              </div>
+              <span class="delete-quantity-link js-delete-quantity-link link-primary" data-product-id = ${item.productId}>
                 Delete
               </span>
             </div>
@@ -56,7 +62,7 @@ function showOrderSummary() {
               Choose a delivery option:
             </div>
             <div class="delivery-option">
-              <input type="radio" checked class="delivery-option-input" name="delivery-option-${productId}">
+              <input type="radio" checked class="delivery-option-input" name="delivery-option-${item.productId}">
               <div>
                 <div class="delivery-option-date">
                   Tuesday, June 21
@@ -67,7 +73,7 @@ function showOrderSummary() {
               </div>
             </div>
             <div class="delivery-option">
-              <input type="radio" class="delivery-option-input" name="delivery-option-${productId}">
+              <input type="radio" class="delivery-option-input" name="delivery-option-${item.productId}">
               <div>
                 <div class="delivery-option-date">
                   Wednesday, June 15
@@ -78,7 +84,7 @@ function showOrderSummary() {
               </div>
             </div>
             <div class="delivery-option">
-              <input type="radio" class="delivery-option-input" name="delivery-option-${productId}">
+              <input type="radio" class="delivery-option-input" name="delivery-option-${item.productId}">
               <div>
                 <div class="delivery-option-date">
                   Monday, June 13
@@ -98,10 +104,33 @@ function showOrderSummary() {
 
   document.querySelectorAll('.js-delete-quantity-link').forEach((deleteLink) => {
     deleteLink.addEventListener('click', () => {
-      console.log(deleteLink.dataset.productId);
       removeFromCart(deleteLink.dataset.productId);
-      console.log(cart);
       showOrderSummary();
     });
   });
+
+  document.querySelectorAll('.js-update-quantity-link').forEach((updateLink) => {
+    updateLink.addEventListener('click', () => {
+      document.querySelector('.js-update-quantity-link').classList.add('update-quantity-link-editing');
+      document.querySelector('.js-save-quantity-row').classList.add('save-quantity-row-editing');
+      document.querySelector('.js-quantity-label').innerHTML = '';
+    });
+  });
+
+  document.querySelectorAll('.js-save-quantity-link').forEach((saveLink) => {
+    saveLink.addEventListener('click', () => {
+      document.querySelector('.js-update-quantity-link').classList.remove('update-quantity-link-editing');
+      document.querySelector('.js-save-quantity-row').classList.remove('save-quantity-row-editing');
+      document.querySelector('.js-quantity-label').innerHTML = `${document.querySelector('.js-update-quantity-input').value}`;
+
+      updateQuantiy(saveLink.dataset.productId, Number(document.querySelector('.js-update-quantity-input').value));
+      showOrderSummary();
+    });
+  });
+
+  let itemsQuantity = 0;
+  cart.forEach((item) => {
+    itemsQuantity += item.quantity;
+  });
+  document.querySelector('.js-return-to-home-link').innerHTML = `${itemsQuantity} items`;
 }
