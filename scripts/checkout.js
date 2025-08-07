@@ -10,14 +10,6 @@ import {
 let orderSummaryHTML;
 showOrderSummary();
 
-document.querySelectorAll('.js-delete-quantity-link').forEach((deleteLink) => {
-  deleteLink.addEventListener('click', () => {
-    removeFromCart(deleteLink.dataset.productId);
-    console.log(cart);
-    showOrderSummary();
-  });
-});
-
 function showOrderSummary() {
   orderSummaryHTML = '';
 
@@ -103,4 +95,13 @@ function showOrderSummary() {
   });
 
   document.querySelector('.js-order-summary').innerHTML = orderSummaryHTML;
+
+  document.querySelectorAll('.js-delete-quantity-link').forEach((deleteLink) => {
+    deleteLink.addEventListener('click', () => {
+      console.log(deleteLink.dataset.productId);
+      removeFromCart(deleteLink.dataset.productId);
+      console.log(cart);
+      showOrderSummary();
+    });
+  });
 }
