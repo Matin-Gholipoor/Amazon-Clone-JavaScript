@@ -9,6 +9,8 @@ import {
 
 products.forEach(generateProduct);
 
+showCartQuantity();
+
 function generateProduct(product) {
   const productElement = `
     <div class="product-container">
@@ -65,17 +67,20 @@ function generateProduct(product) {
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
   button.addEventListener('click', () => {
     addToCart(button.dataset.productId);
-    updateCartQuantity(button.dataset.productId);
+    activateAddedMessage(button.dataset.productId);
+    showCartQuantity();
   })
 });
 
-function updateCartQuantity(productId) {
+function showCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity += item.quantity;
   });
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
 
+function activateAddedMessage(productId) {
   document.querySelectorAll('.js-added-to-cart').forEach((addedElement) => {
     if (addedElement.dataset.productId === productId) {
       addedElement.classList.add('added-to-cart-activated');
