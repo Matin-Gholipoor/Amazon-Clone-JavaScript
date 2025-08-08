@@ -137,7 +137,7 @@ function GenerateDeliveryOptionsHTML(item) {
         <input type="radio" ${isChecked ? 'checked' : ''} class="delivery-option-input" name="delivery-option-${item.productId}">
         <div>
           <div class="delivery-option-date">
-            ${dayjs().add(deliveryOption.deliveryDays, 'day').format('dddd, MMMM D')}
+            ${retrieveDeliveryDate(deliveryOption.id)}
           </div>
           <div class="delivery-option-price">
             ${deliveryOption.priceCents ? `$${(deliveryOption.priceCents / 100).toFixed(2)} -` : 'FREE'} Shipping
@@ -151,12 +151,24 @@ function GenerateDeliveryOptionsHTML(item) {
 }
 
 function retrieveDeliveryDate(deliveryOptionId) {
-  let deliveryDate = '';
+  let deliveryDateFormatted = '';
 
   deliveryOptions.forEach((deliveryOption) => {
-    if (deliveryOptionId === deliveryOption.id)
-      deliveryDate = dayjs().add(deliveryOption.deliveryDays, 'day').format('dddd, MMMM D');
+    let deliveryDate = dayjs();
+
+    if (deliveryOptionId === deliveryOption.id) {
+      for (let i = 0; i < deliveryOption.deliveryDays;) {
+        deliveryDate = deliveryDate.add(1, 'day');
+
+        console.log(deliveryDate.format('dddd'));
+
+        if (deliveryDate.format('dddd') !== 'Saturday' && deliveryDate.format('dddd') !== 'Sunday')
+          i++;
+      }
+
+      deliveryDateFormatted = deliveryDate.format('dddd, MMMM D');
+    }
   });
 
-  return deliveryDate;
+  return deliveryDateFormatted;
 }
