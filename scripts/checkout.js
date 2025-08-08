@@ -47,13 +47,13 @@ function showOrderSummary() {
             </div>
             <div class="product-quantity">
               <span>
-                Quantity: <span class="quantity-label js-quantity-label">${item.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label js-quantity-label-${item.productId}">${item.quantity}</span>
               </span>
-              <span class="update-quantity-link js-update-quantity-link link-primary" data-product-id = ${item.productId}>
+              <span class="update-quantity-link js-update-quantity-link js-update-quantity-link-${item.productId} link-primary" data-product-id = ${item.productId}>
                 Update
               </span>
-              <div class="save-quantity-row js-save-quantity-row" data-product-id = ${item.productId}>
-                <input type="number" class="update-quantity-input js-update-quantity-input" value="${item.quantity}" min="0"></input>
+              <div class="save-quantity-row js-save-quantity-row js-save-quantity-row-${item.productId}" data-product-id = ${item.productId}>
+                <input type="number" class="update-quantity-input js-update-quantity-input-${item.productId}" value="${item.quantity}" min="0"></input>
                 <span class="save-quantity-link js-save-quantity-link link-primary" data-product-id = ${item.productId}>
                   Save
                 </span>
@@ -88,19 +88,19 @@ function showOrderSummary() {
   // bug here
   document.querySelectorAll('.js-update-quantity-link').forEach((updateLink) => {
     updateLink.addEventListener('click', () => {
-      document.querySelector('.js-update-quantity-link').classList.add('update-quantity-link-editing');
-      document.querySelector('.js-save-quantity-row').classList.add('save-quantity-row-editing');
-      document.querySelector('.js-quantity-label').innerHTML = '';
+      document.querySelector(`.js-update-quantity-link-${updateLink.dataset.productId}`).classList.add('update-quantity-link-editing');
+      document.querySelector(`.js-save-quantity-row-${updateLink.dataset.productId}`).classList.add('save-quantity-row-editing');
+      document.querySelector(`.js-quantity-label-${updateLink.dataset.productId}`).innerHTML = '';
     });
   });
 
   document.querySelectorAll('.js-save-quantity-link').forEach((saveLink) => {
     saveLink.addEventListener('click', () => {
-      document.querySelector('.js-update-quantity-link').classList.remove('update-quantity-link-editing');
-      document.querySelector('.js-save-quantity-row').classList.remove('save-quantity-row-editing');
-      document.querySelector('.js-quantity-label').innerHTML = `${document.querySelector('.js-update-quantity-input').value}`;
+      document.querySelector(`.js-update-quantity-link-${saveLink.dataset.productId}`).classList.remove('update-quantity-link-editing');
+      document.querySelector(`.js-save-quantity-row-${saveLink.dataset.productId}`).classList.remove('save-quantity-row-editing');
+      document.querySelector(`.js-quantity-label-${saveLink.dataset.productId}`).innerHTML = `${document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value}`;
 
-      updateQuantiy(saveLink.dataset.productId, Number(document.querySelector('.js-update-quantity-input').value));
+      updateQuantiy(saveLink.dataset.productId, Number(document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value));
       showOrderSummary();
     });
   });
