@@ -19,6 +19,10 @@ import {
   showPaymentSummary
 } from './paymentSummary.js';
 
+import {
+  showCheckoutHeader
+} from './checkoutHeader.js';
+
 let orderSummaryHTML;
 showOrderSummary();
 showPaymentSummary();
@@ -111,11 +115,7 @@ function showOrderSummary() {
     });
   });
 
-  let itemsQuantity = 0;
-  cart.forEach((item) => {
-    itemsQuantity += item.quantity;
-  });
-  document.querySelector('.js-return-to-home-link').innerHTML = `${itemsQuantity} items`;
+  showCheckoutHeader();
 
   document.querySelectorAll('.js-delivery-option').forEach((option, index) => {
     option.addEventListener('click', () => {
