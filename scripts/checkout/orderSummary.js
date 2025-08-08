@@ -3,20 +3,25 @@ import {
   removeFromCart,
   updateQuantiy,
   updateDeliveryOption
-} from '../data/cart.js';
+} from '../../data/cart.js';
 
 import {
   products
-} from '../data/products.js';
+} from '../../data/products.js';
 
 import {
   deliveryOptions
-} from '../data/deliveryOptions.js';
+} from '../../data/deliveryOptions.js';
 
 import dayjs from "https://esm.run/dayjs";
 
+import {
+  showPaymentSummary
+} from './paymentSummary.js';
+
 let orderSummaryHTML;
 showOrderSummary();
+showPaymentSummary();
 
 function showOrderSummary() {
   orderSummaryHTML = '';
@@ -82,10 +87,10 @@ function showOrderSummary() {
     deleteLink.addEventListener('click', () => {
       removeFromCart(deleteLink.dataset.productId);
       showOrderSummary();
+      showPaymentSummary();
     });
   });
 
-  // bug here
   document.querySelectorAll('.js-update-quantity-link').forEach((updateLink) => {
     updateLink.addEventListener('click', () => {
       document.querySelector(`.js-update-quantity-link-${updateLink.dataset.productId}`).classList.add('update-quantity-link-editing');
@@ -102,6 +107,7 @@ function showOrderSummary() {
 
       updateQuantiy(saveLink.dataset.productId, Number(document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value));
       showOrderSummary();
+      showPaymentSummary();
     });
   });
 
@@ -115,6 +121,7 @@ function showOrderSummary() {
     option.addEventListener('click', () => {
       updateDeliveryOption(option.dataset.productId, String(index % deliveryOptions.length));
       showOrderSummary();
+      showPaymentSummary();
     });
   });
 }
