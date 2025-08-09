@@ -3,8 +3,7 @@ import {
 } from './data/products.js';
 
 import {
-  cart,
-  addToCart
+  Cart
 } from './data/cart.js';
 
 import {
@@ -13,6 +12,7 @@ import {
 
 products.forEach(generateProduct);
 
+const cart = new Cart('cart');
 showCartQuantity();
 
 function generateProduct(product) {
@@ -70,7 +70,14 @@ function generateProduct(product) {
 
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
   button.addEventListener('click', () => {
-    addToCart(button.dataset.productId);
+    let quantity;
+    document.querySelectorAll('.js-quantity-selector').forEach((quantitySelector) => {
+      if (quantitySelector.dataset.productId === button.dataset.productId)
+        quantity = Number(quantitySelector.value);
+    });
+
+    cart.addToCart(button.dataset.productId, quantity);
+
     activateAddedMessage(button.dataset.productId);
     showCartQuantity();
   })
@@ -78,7 +85,7 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
 
 function showCartQuantity() {
   let cartQuantity = 0;
-  cart.forEach((item) => {
+  cart.getCartItems().forEach((item) => {
     cartQuantity += item.quantity;
   });
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;

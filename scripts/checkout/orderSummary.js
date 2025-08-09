@@ -1,8 +1,5 @@
 import {
-  cart,
-  removeFromCart,
-  updateQuantiy,
-  updateDeliveryOption
+  Cart
 } from '../data/cart.js';
 
 import {
@@ -32,9 +29,10 @@ showOrderSummary();
 showPaymentSummary();
 
 function showOrderSummary() {
+  const cart = new Cart('cart');
   orderSummaryHTML = '';
 
-  cart.forEach((item) => {
+  cart.getCartItems().forEach((item) => {
     let product;
 
     products.forEach((itemFromProducts) => {
@@ -93,7 +91,7 @@ function showOrderSummary() {
 
   document.querySelectorAll('.js-delete-quantity-link').forEach((deleteLink) => {
     deleteLink.addEventListener('click', () => {
-      removeFromCart(deleteLink.dataset.productId);
+      cart.removeFromCart(deleteLink.dataset.productId);
       showOrderSummary();
       showPaymentSummary();
     });
@@ -113,7 +111,7 @@ function showOrderSummary() {
       document.querySelector(`.js-save-quantity-row-${saveLink.dataset.productId}`).classList.remove('save-quantity-row-editing');
       document.querySelector(`.js-quantity-label-${saveLink.dataset.productId}`).innerHTML = `${document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value}`;
 
-      updateQuantiy(saveLink.dataset.productId, Number(document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value));
+      cart.updateQuantiy(saveLink.dataset.productId, Number(document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value));
       showOrderSummary();
       showPaymentSummary();
     });
@@ -123,7 +121,7 @@ function showOrderSummary() {
 
   document.querySelectorAll('.js-delivery-option').forEach((option, index) => {
     option.addEventListener('click', () => {
-      updateDeliveryOption(option.dataset.productId, String(index % deliveryOptions.length));
+      cart.updateDeliveryOption(option.dataset.productId, String(index % deliveryOptions.length));
       showOrderSummary();
       showPaymentSummary();
     });

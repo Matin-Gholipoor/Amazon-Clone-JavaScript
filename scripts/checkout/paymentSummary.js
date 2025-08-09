@@ -1,5 +1,5 @@
 import {
-	cart
+	Cart
 } from '../data/cart.js';
 
 import {
@@ -15,11 +15,12 @@ import {
 } from '../utils/money.js';
 
 export function showPaymentSummary() {
+	const cart = new Cart('cart');
 	let itemsQuantity = 0;
 	let itemsPriceCents = 0;
 	let shippingAndHandlingPriceCents = 0;
 
-	cart.forEach((item) => {
+	cart.getCartItems().forEach((item) => {
 		itemsQuantity += item.quantity;
 
 		products.forEach((product) => {
