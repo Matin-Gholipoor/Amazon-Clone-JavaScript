@@ -3,15 +3,15 @@ import {
   removeFromCart,
   updateQuantiy,
   updateDeliveryOption
-} from '../../data/cart.js';
+} from '../data/cart.js';
 
 import {
   products
-} from '../../data/products.js';
+} from '../data/products.js';
 
 import {
   deliveryOptions
-} from '../../data/deliveryOptions.js';
+} from '../data/deliveryOptions.js';
 
 import dayjs from "https://esm.run/dayjs";
 

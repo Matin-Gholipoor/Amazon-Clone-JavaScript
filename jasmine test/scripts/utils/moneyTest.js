@@ -1,6 +1,6 @@
 import {
 	centsToDollars
-} from '../scripts/utils/money.js'
+} from '../../../scripts/utils/money.js'
 
 describe('centsToDollars Test', () => {
 	it('normal case', () => {

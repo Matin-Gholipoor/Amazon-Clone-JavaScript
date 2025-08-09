@@ -1,11 +1,11 @@
 import {
   products
-} from '../data/products.js';
+} from './data/products.js';
 
 import {
   cart,
   addToCart
-} from '../data/cart.js';
+} from './data/cart.js';
 
 import {
   centsToDollars
