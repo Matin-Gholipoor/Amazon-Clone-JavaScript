@@ -23,6 +23,10 @@ import {
   showCheckoutHeader
 } from './checkoutHeader.js';
 
+import {
+  centsToDollars
+} from '../utils/money.js';
+
 let orderSummaryHTML;
 showOrderSummary();
 showPaymentSummary();
@@ -52,7 +56,7 @@ function showOrderSummary() {
               ${product.name}
             </div>
             <div class="product-price">
-              $${(product.priceCents / 100).toFixed(2)}
+              $${centsToDollars(product.priceCents)}              
             </div>
             <div class="product-quantity">
               <span>
@@ -140,7 +144,7 @@ function GenerateDeliveryOptionsHTML(item) {
             ${retrieveDeliveryDate(deliveryOption.id)}
           </div>
           <div class="delivery-option-price">
-            ${deliveryOption.priceCents ? `$${(deliveryOption.priceCents / 100).toFixed(2)} -` : 'FREE'} Shipping
+            ${deliveryOption.priceCents ? `$${centsToDollars(deliveryOption.priceCents)} -` : 'FREE'} Shipping
           </div>
         </div>
       </div>
@@ -159,8 +163,6 @@ function retrieveDeliveryDate(deliveryOptionId) {
     if (deliveryOptionId === deliveryOption.id) {
       for (let i = 0; i < deliveryOption.deliveryDays;) {
         deliveryDate = deliveryDate.add(1, 'day');
-
-        console.log(deliveryDate.format('dddd'));
 
         if (deliveryDate.format('dddd') !== 'Saturday' && deliveryDate.format('dddd') !== 'Sunday')
           i++;

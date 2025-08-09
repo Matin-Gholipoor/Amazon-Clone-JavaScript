@@ -7,6 +7,10 @@ import {
   addToCart
 } from '../data/cart.js';
 
+import {
+  centsToDollars
+} from './utils/money.js';
+
 products.forEach(generateProduct);
 
 showCartQuantity();
@@ -30,7 +34,7 @@ function generateProduct(product) {
       </div>
 
       <div class="product-price">
-        $${(product.priceCents / 100).toFixed(2)}
+        $${centsToDollars(product.priceCents)}
       </div>
 
       <div class="product-quantity-container">

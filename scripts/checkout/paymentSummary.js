@@ -10,6 +10,10 @@ import {
 	products
 } from '../../data/products.js';
 
+import {
+	centsToDollars
+} from '../utils/money.js';
+
 export function showPaymentSummary() {
 	let itemsQuantity = 0;
 	let itemsPriceCents = 0;
@@ -29,11 +33,11 @@ export function showPaymentSummary() {
 		});
 	});
 
-	const itemsPrice = (itemsPriceCents / 100).toFixed(2);
-	const shippingAndHandlingPrice = (shippingAndHandlingPriceCents / 100).toFixed(2);
-	const totalBeforeTax = ((itemsPriceCents + shippingAndHandlingPriceCents) / 100).toFixed(2);
-	const estimatedTax = ((itemsPriceCents + shippingAndHandlingPriceCents) / 1000).toFixed(2);
-	const orderTotal = ((itemsPriceCents + shippingAndHandlingPriceCents) / 100 * 1.1).toFixed(2);
+	const itemsPrice = centsToDollars(itemsPriceCents);
+	const shippingAndHandlingPrice = centsToDollars(shippingAndHandlingPriceCents);
+	const totalBeforeTax = centsToDollars(itemsPriceCents + shippingAndHandlingPriceCents);
+	const estimatedTax = centsToDollars((itemsPriceCents + shippingAndHandlingPriceCents) / 10);
+	const orderTotal = centsToDollars((itemsPriceCents + shippingAndHandlingPriceCents) * 1.1);
 
 	const paymentSummary = `
 		<div class="payment-summary-title">
