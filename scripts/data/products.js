@@ -1,5 +1,28 @@
-export const products = [
-  {
+class Product {
+  id;
+  image;
+  name;
+  rating;
+  priceCents;
+
+  constructor(id, image, name, rating, priceCents) {
+    this.id = id;
+    this.image = image;
+    this.name = name;
+    this.rating = rating;
+    this.priceCents = priceCents;
+  }
+
+  getRatingImageLink() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
+
+  getImageLink(){
+    return `images/products/${this.image}`;
+  }
+}
+
+export const products = [{
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
@@ -657,4 +680,8 @@ export const products = [
       "mens"
     ]
   }
-];
+].map((item) => {
+  return new Product(item.id, item.image, item.name, item.rating, item.priceCents);
+});
+
+console.log(products);

@@ -19,7 +19,7 @@ function generateProduct(product) {
   const productElement = `
     <div class="product-container">
       <div class="product-image-container">
-        <img class="product-image" src="images/products/${product.image}">
+        <img class="product-image" src="${product.getImageLink()}">
       </div>
 
       <div class="product-name limit-text-to-2-lines">
@@ -27,7 +27,7 @@ function generateProduct(product) {
       </div>
 
       <div class="product-rating-container">
-        <img class="product-rating-stars" src="images/ratings/rating-${product.rating.stars * 10}.png">
+        <img class="product-rating-stars" src="${product.getRatingImageLink()}">
         <div class="product-rating-count link-primary">
           ${product.rating.count}
         </div>
