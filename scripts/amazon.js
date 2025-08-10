@@ -52,6 +52,8 @@ function generateProduct(product) {
         </select>
       </div>
 
+      ${product.extraInfoHTML()}
+
       <div class="product-spacer"></div>
 
       <div class="added-to-cart js-added-to-cart" data-product-id="${product.id}" data-timeout-id="">
