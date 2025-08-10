@@ -27,7 +27,15 @@ import {
 
 let orderSummaryHTML;
 
-loadProducts(() => {
+// loadProducts(() => {
+//   showOrderSummary();
+//   showPaymentSummary();
+//   showCheckoutHeader();
+// });
+
+new Promise((resolve) => {
+  loadProducts(resolve);
+}).then(() => {
   showOrderSummary();
   showPaymentSummary();
   showCheckoutHeader();

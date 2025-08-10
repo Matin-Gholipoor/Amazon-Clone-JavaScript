@@ -11,7 +11,13 @@ import {
   centsToDollars
 } from './utils/money.js';
 
-loadProducts(generateProductHTML);
+new Promise((resolve)=>{
+  loadProducts(resolve);
+}).then(()=>{
+  generateProductHTML();
+});
+
+// loadProducts(generateProductHTML);
 
 const cart = new Cart('cart');
 showCartQuantity();
