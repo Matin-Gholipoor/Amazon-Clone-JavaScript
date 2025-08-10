@@ -3,7 +3,8 @@ import {
 } from '../data/cart.js';
 
 import {
-  products
+  products,
+  loadProducts
 } from '../data/products.js';
 
 import {
@@ -25,8 +26,12 @@ import {
 } from '../utils/money.js';
 
 let orderSummaryHTML;
-showOrderSummary();
-showPaymentSummary();
+
+loadProducts(() => {
+  showOrderSummary();
+  showPaymentSummary();
+  showCheckoutHeader();
+});
 
 function showOrderSummary() {
   const cart = new Cart('cart');
@@ -47,7 +52,7 @@ function showOrderSummary() {
         </div>
   
         <div class="cart-item-details-grid">
-          <img class="product-image" src="images/products/${product.image}">
+          <img class="product-image" src="${product.image}">
   
           <div class="cart-item-details">
             <div class="product-name">
@@ -94,6 +99,7 @@ function showOrderSummary() {
       cart.removeFromCart(deleteLink.dataset.productId);
       showOrderSummary();
       showPaymentSummary();
+      showCheckoutHeader();
     });
   });
 
@@ -114,16 +120,16 @@ function showOrderSummary() {
       cart.updateQuantiy(saveLink.dataset.productId, Number(document.querySelector(`.js-update-quantity-input-${saveLink.dataset.productId}`).value));
       showOrderSummary();
       showPaymentSummary();
+      showCheckoutHeader();
     });
   });
-
-  showCheckoutHeader();
 
   document.querySelectorAll('.js-delivery-option').forEach((option, index) => {
     option.addEventListener('click', () => {
       cart.updateDeliveryOption(option.dataset.productId, String(index % deliveryOptions.length));
       showOrderSummary();
       showPaymentSummary();
+      showCheckoutHeader();
     });
   });
 }
