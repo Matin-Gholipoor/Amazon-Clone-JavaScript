@@ -73,9 +73,17 @@
   overflow: hidden;
 }
 
-.progress-bar {
+.progress-bar-shipped,
+.progress-bar-delivered {
   height: 100%;
   background-color: green;
   border-radius: 50px;
+}
+
+.progress-bar-shipped{
   width: 50%;
+}
+
+.progress-bar-delivered{
+  width: 100%;
 }

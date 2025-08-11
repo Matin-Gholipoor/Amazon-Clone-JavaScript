@@ -83,8 +83,6 @@ function itemsHTMLGenerator(order) {
 
   order.products.forEach((productFromOrder) => {
     products.forEach((product) => {
-
-
       if (product.id === productFromOrder.productId) {
         itemsHTML += `
           <div class="product-image-container">
@@ -108,8 +106,8 @@ function itemsHTMLGenerator(order) {
           </div>
 
           <div class="product-actions">
-            <a href="tracking.html">
-              <button class="track-package-button button-secondary">
+            <a href="tracking.html?orderId=${order.id}&productId=${product.id}">
+              <button class="track-package-button js-track-package-button button-secondary">
                 Track package
               </button>
             </a>
