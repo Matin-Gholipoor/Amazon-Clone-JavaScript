@@ -39,6 +39,14 @@ function showOrdersSummary() {
 
   let orderHTML = '';
 
+  if(orders.length === 0){
+    orderHTML = `
+    <p class="no-orders-message">
+      You have no orders.
+    </p>
+    `;
+  }
+
   orders.forEach((order) => {
     orderHTML += `
       <div class="order-container">

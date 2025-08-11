@@ -218,3 +218,8 @@
     padding: 12px;
   }
 }
+
+.no-orders-message{
+  font-size: 24px;
+  text-align: center;
+}

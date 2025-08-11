@@ -62,7 +62,19 @@ export class Cart {
     localStorage.setItem('cart', JSON.stringify(this.#cartItems));
   }
 
-  getCartItems(){
+  getCartItems() {
     return this.#cartItems;
+  }
+
+  empty() {
+    this.#cartItems.length = 0;
+    this.#saveCartItems();
+  }
+
+  isEmpty() {
+    if (this.#cartItems.length === 0)
+      return true;
+    else
+      return false;
   }
 }
