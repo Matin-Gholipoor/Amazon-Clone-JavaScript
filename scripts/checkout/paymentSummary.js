@@ -93,6 +93,8 @@ export function showPaymentSummary() {
 				})
 			});
 
+			window.location.href = 'orders.html';
+
 			if (!response.ok)
 				throw new Error('Server error.');
 

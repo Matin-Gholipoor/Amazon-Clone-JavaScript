@@ -6,7 +6,7 @@ export class Order {
 
   constructor(orderDetails) {
     this.id = orderDetails.id;
-    this.orderTime = orderDetails.id;
+    this.orderTime = orderDetails.orderTime;
     this.totalCostCents = orderDetails.totalCostCents;
     this.products = orderDetails.products;
   }
@@ -15,7 +15,7 @@ export class Order {
     orders.unshift(this);
     this.#saveOrders()
   }
-  
+
   #saveOrders() {
     localStorage.setItem('orders', JSON.stringify(orders));
   }
@@ -41,6 +41,6 @@ export let orders = JSON.parse(localStorage.getItem('orders')) || [
   }
 ];
 
-orders = orders.map((orderFromStorage)=>{
+orders = orders.map((orderFromStorage) => {
   return new Order(orderFromStorage);
 });
