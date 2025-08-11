@@ -67,6 +67,21 @@ class Appliance extends Product {
 
 export let products;
 
+export function loadProductsFetch(){
+  return fetch('https://supersimplebackend.dev/products').then((response)=>{
+    return response.json();
+  }).then((fetchedProducts)=>{
+    products = fetchedProducts.map((product) => {
+      if (product.type === "clothing")
+        return new Clothing(product);
+      else if (product.type === "appliance")
+        return new Appliance(product);
+
+      return new Product(product);
+    });
+  });
+}
+
 export function loadProducts(functionToRun) {
   const httpRequestForProducts = new XMLHttpRequest();
 

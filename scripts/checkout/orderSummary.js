@@ -4,7 +4,8 @@ import {
 
 import {
   products,
-  loadProducts
+  loadProducts,
+  loadProductsFetch
 } from '../data/products.js';
 
 import {
@@ -33,9 +34,15 @@ let orderSummaryHTML;
 //   showCheckoutHeader();
 // });
 
-new Promise((resolve) => {
-  loadProducts(resolve);
-}).then(() => {
+// new Promise((resolve) => {
+//   loadProducts(resolve);
+// }).then(() => {
+//   showOrderSummary();
+//   showPaymentSummary();
+//   showCheckoutHeader();
+// });
+
+loadProductsFetch().then(()=>{
   showOrderSummary();
   showPaymentSummary();
   showCheckoutHeader();

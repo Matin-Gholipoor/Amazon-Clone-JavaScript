@@ -1,6 +1,7 @@
 import {
   products,
-  loadProducts
+  loadProducts,
+  loadProductsFetch
 } from './data/products.js';
 
 import {
@@ -11,13 +12,17 @@ import {
   centsToDollars
 } from './utils/money.js';
 
-new Promise((resolve)=>{
-  loadProducts(resolve);
-}).then(()=>{
+loadProductsFetch().then(()=>{
   generateProductHTML();
 });
 
 // loadProducts(generateProductHTML);
+
+// new Promise((resolve)=>{
+//   loadProducts(resolve);
+// }).then(()=>{
+//   generateProductHTML();
+// });
 
 const cart = new Cart('cart');
 showCartQuantity();
