@@ -42,11 +42,20 @@ let orderSummaryHTML;
 //   showCheckoutHeader();
 // });
 
-loadProductsFetch().then(()=>{
+// loadProductsFetch().then(()=>{
+//   showOrderSummary();
+//   showPaymentSummary();
+//   showCheckoutHeader();
+// });
+
+async function loadOrderSummary() {
+  await loadProductsFetch();
+
   showOrderSummary();
   showPaymentSummary();
   showCheckoutHeader();
-});
+}
+loadOrderSummary();
 
 function showOrderSummary() {
   const cart = new Cart('cart');

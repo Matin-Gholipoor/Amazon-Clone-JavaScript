@@ -12,9 +12,16 @@ import {
   centsToDollars
 } from './utils/money.js';
 
-loadProductsFetch().then(()=>{
+async function loadPage(){
+  await loadProductsFetch();
+
   generateProductHTML();
-});
+}
+loadPage();
+
+// loadProductsFetch().then(()=>{
+//   generateProductHTML();
+// });
 
 // loadProducts(generateProductHTML);
 
