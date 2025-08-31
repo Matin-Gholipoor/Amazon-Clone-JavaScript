@@ -42,7 +42,7 @@ This repository exists **only for learning purposes**, and all appropriate credi
 To run this project locally:
 
 1. Clone the repository
-2. Run `amazon.html` using a local server (e.g., Live Server)
+2. Run `index.html` using a local server (e.g., Live Server)
 3. Explore the JS functionality added during the course
 
 ---
