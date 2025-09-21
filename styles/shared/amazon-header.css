@@ -1,4 +1,20 @@
 .amazon-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+
+  background-color: white;
+  border-bottom: 1px solid rgb(232, 232, 232);
+}
+
+.header-content {
   background-color: rgb(19, 25, 33);
   color: white;
   padding-left: 15px;
@@ -8,11 +24,7 @@
   align-items: center;
   justify-content: space-between;
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
+  width: 100%;
 }
 
 .amazon-header-left-section {
@@ -143,7 +155,7 @@
   position: absolute;
   top: 4px;
   left: 22px;
-  
+
   width: 26px;
   text-align: center;
 }

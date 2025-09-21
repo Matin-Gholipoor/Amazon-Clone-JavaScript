@@ -20,8 +20,30 @@ select {
   cursor: pointer;
 }
 
-input, select, button {
+input,
+select,
+button {
   font-family: Roboto, Arial;
+}
+
+.disclaimer {
+  max-width: 800px;
+
+  text-align: center;
+  color: rgb(33, 33, 33);
+  font-weight: bold;
+
+  margin-block: 20px;
+  padding: 20px;
+
+  background-color: rgb(255, 245, 226);
+}
+
+.disclaimer span {
+  color: red;
+  display: block;
+
+  margin-bottom: 5px;
 }
 
 .button-primary {
